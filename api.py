@@ -17,6 +17,10 @@ app.add_middleware(
 # Global env instance
 env = None
 
+@app.get("/")
+async def root():
+    return {"message": "Email Triage OpenEnv API", "status": "running"}
+
 @app.on_event("startup")
 async def startup_event():
     global env
