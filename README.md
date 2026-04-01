@@ -59,3 +59,27 @@ python baseline.py
 ```
 
 This will run GPT-3.5-turbo on all tasks and print the scores.
+
+## Deployment
+
+### GitHub
+
+1. Create a new repository on GitHub
+2. Copy the repository URL
+3. Run these commands:
+
+```bash
+git remote add origin <your-github-repo-url>
+git branch -M main
+git push -u origin main
+```
+
+### Hugging Face Spaces
+
+1. Go to [Hugging Face Spaces](https://huggingface.co/spaces)
+2. Create a new Space with Streamlit
+3. Upload the following files:
+   - `email_triage_env/` (entire directory)
+   - `demo.py`
+   - `requirements-hf.txt` (rename to `requirements.txt`)
+4. The demo will be available at your Space URL
