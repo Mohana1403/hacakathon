@@ -4,7 +4,7 @@
 
 ### Option 1: Upload Files Directly (Easiest)
 
-1. Go to https://huggingface.co/spaces and click **Create new Space**
+1. Go to <https://huggingface.co/spaces> and click **Create new Space**
 2. Fill in details:
    - **Space name**: `email-triage-rl-demo`
    - **License**: `MIT`
@@ -14,7 +14,7 @@
 
 4. In the Space, upload these files with this exact structure:
 
-```
+```text
 your-space-name/
 ├── streamlit_app.py  ← Rename demo.py to this
 ├── requirements.txt  ← Use requirements-hf.txt (rename it)
@@ -43,6 +43,7 @@ your-space-name/
 Don't worry about the disk space issue locally. Your code is ready for Hugging Face!
 
 When you upload to Hugging Face Spaces, it will:
+
 - Create a clean virtual environment
 - Install dependencies automatically
 - Run your Streamlit app
@@ -60,11 +61,12 @@ When you upload to Hugging Face Spaces, it will:
 ## Troubleshooting in HF Spaces
 
 If there are issues:
+
 1. Check the **App logs** tab in your Space
 2. Make sure file structure matches above
 3. Verify `requirements.txt` has the right packages
 
-## Your Current Files Are Ready!
+## Your Current Files Are Ready
 
 ✅ `email_triage_env/` - Complete package
 ✅ `demo.py` - Streamlit app (just rename it)
