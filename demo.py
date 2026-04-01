@@ -4,7 +4,7 @@ Demo script for the Email Triage Environment
 Can be used in Hugging Face Spaces or for local demonstration
 """
 
-import streamlit as st
+import streamlit as st  # type: ignore
 from email_triage_env import EmailTriageEnv, Action
 
 def main():
