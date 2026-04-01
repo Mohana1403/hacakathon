@@ -1,0 +1,12 @@
+name: email-triage-env
+version: 1.0.0
+description: A real-world email triage simulation environment for reinforcement learning agents.
+author: AI Assistant
+license: MIT
+dependencies:
+  - pydantic
+  - openai
+tasks:
+  - easy: Classify 5 emails into important/not important
+  - medium: Classify 10 emails into important/urgent/spam
+  - hard: Prioritize and classify 20 emails
