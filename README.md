@@ -1,6 +1,35 @@
+---
+title: Email Triage OpenEnv Demo
+emoji: 📧
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
+
 # Email Triage Environment
 
-A real-world task simulation for email triage using the OpenEnv framework.
+A real-world task simulation for email triage using the OpenEnv framework. This environment challenges AI agents to classify and prioritize emails in a simulated inbox.
+
+## Features
+
+- **Real-world task**: Email triage simulation
+- **Multiple difficulty levels**: Easy, Medium, Hard tasks
+- **OpenEnv compliant**: Standard step()/reset()/state() API
+- **Automated grading**: Built-in task evaluation
+- **API server**: FastAPI-based HTTP endpoints for remote access
+
+## Tasks
+
+- **Easy**: Classify 5 emails into important/not_important
+- **Medium**: Classify 10 emails into important/urgent/spam
+- **Hard**: Prioritize and classify 20 emails (1-20 priority scale)
+
+## API Endpoints
+
+- `POST /reset` - Reset environment and get initial observation
+- `POST /step` - Take action and get next observation/reward
+- `GET /state` - Get current environment state
 
 ## Installation
 
@@ -8,7 +37,7 @@ A real-world task simulation for email triage using the OpenEnv framework.
 pip install -r requirements.txt
 ```
 
-## Usage
+## Local Usage
 
 ### Running the Environment
 
@@ -17,6 +46,32 @@ from email_triage_env import EmailTriageEnv, Action
 
 env = EmailTriageEnv(task="easy")
 obs = env.reset()
+
+while not env.state()["done"]:
+    # Take action
+    action = Action(action_type="classify", category="important")
+    obs, reward, done, info = env.step(action)
+```
+
+### Running the API Server
+
+```bash
+python api.py
+```
+
+### Running Inference Baseline
+
+```bash
+python inference.py
+```
+
+## Deployment
+
+This environment is deployed on Hugging Face Spaces with Docker.
+
+## License
+
+MIT
 
 action = Action(action_type="classify", category="important")
 obs, reward, done, info = env.step(action)
