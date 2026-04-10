@@ -9,11 +9,7 @@ def run_inference(task_name: str) -> float:
     if not api_key:
         raise ValueError("HF_TOKEN environment variable is not set.")
     
-    client_kwargs = {"api_key": api_key}
-    if api_base:
-        client_kwargs["base_url"] = api_base
-    
-    client = OpenAI(**client_kwargs)
+    client = OpenAI(api_key=api_key, base_url=api_base)
     env = EmailTriageEnv(task=task_name)
     obs = env.reset()
 
