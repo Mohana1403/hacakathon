@@ -2,11 +2,18 @@ import os
 from openai import OpenAI
 from email_triage_env import EmailTriageEnv, Action
 
-def run_inference(task_name: str, model: str = "gpt-3.5-turbo") -> float:
-    api_key = os.getenv("OPENAI_API_KEY") or os.getenv("HF_TOKEN")
+def run_inference(task_name: str) -> float:
+    api_base = os.getenv("API_BASE_URL")
+    model = os.getenv("MODEL_NAME", "gpt-3.5-turbo")
+    api_key = os.getenv("HF_TOKEN")
     if not api_key:
-        raise ValueError("OPENAI_API_KEY or HF_TOKEN environment variable is not set.")
-    client = OpenAI(api_key=api_key)
+        raise ValueError("HF_TOKEN environment variable is not set.")
+    
+    client_kwargs = {"api_key": api_key}
+    if api_base:
+        client_kwargs["base_url"] = api_base
+    
+    client = OpenAI(**client_kwargs)
     env = EmailTriageEnv(task=task_name)
     obs = env.reset()
 
@@ -62,7 +69,15 @@ def run_inference(task_name: str, model: str = "gpt-3.5-turbo") -> float:
         total_reward += reward.value
         steps += 1
         
-        print(f"[STEP] {steps} {action.action_type} {reward.value} {done}")
+        # Format action param
+        if action.action_type == "classify":
+            action_param = action.category or ""
+        elif action.action_type == "prioritize":
+            action_param = str(action.priority) if action.priority is not None else ""
+        else:
+            action_param = ""
+        
+        print(f"[STEP] {steps} {action.action_type} {action_param} {reward.value} {done}")
         
         if steps > 100:  # Safety limit
             break
@@ -74,9 +89,8 @@ def run_inference(task_name: str, model: str = "gpt-3.5-turbo") -> float:
 
 if __name__ == "__main__":
     tasks = ["easy", "medium", "hard"]
-    model = os.getenv("MODEL_NAME", "gpt-3.5-turbo")
     
-    print("Running inference with", model)
+    print("Running inference")
     for task in tasks:
-        score = run_inference(task, model)
+        score = run_inference(task)
         print(f"{task.capitalize()} task score: {score:.2f}")
